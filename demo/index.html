@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ready Promise</title>
+  <script type="module" src="../src/index.js"></script>
+  <script type="module">
+    import {onReadyState, readyStates} from "../src";
+
+    function _output(string)
+    {
+      const div = document.createElement('div');
+      div.append(string);
+      document.body.appendChild(div);
+    }
+
+    /*
+     expected output:
+      interactive
+      loading
+      uninitialized
+      loaded
+      loaded (default)
+      complete
+     */
+
+    // run in reverse order to assert expected output
+    onReadyState(readyStates.complete).then(() => _output('complete'));
+    onReadyState(readyStates.loaded).then(() => _output('loaded'));
+    onReadyState().then(() => _output('loaded (default)'));
+
+    // will execute immediately because state has already passed
+    onReadyState(readyStates.interactive).then(() => _output('interactive'));
+    onReadyState(readyStates.loading).then(() => _output('loading'));
+    onReadyState(readyStates.uninitialized).then(() => _output('uninitialized'));
+  </script>
+</head>
+<body>
+
+</body>
+</html>
