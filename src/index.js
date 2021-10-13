@@ -15,7 +15,7 @@ export function onReadyState(state = readyStates.loaded)
   state = readyStates[state] || state;
   if(typeof state !== 'number')
   {
-    throw 'not a valid state';
+    throw new Error('not a valid state');
   }
 
   let promise;
@@ -61,14 +61,14 @@ document.addEventListener(
   'readystatechange', () =>
   {
     _setCurrentReadyState(document.readyState);
-  }
+  },
 );
 
 document.addEventListener(
   'DOMContentLoaded', () =>
   {
     _setCurrentReadyState(readyStates.loaded);
-  }
+  },
 );
 
 // initialize to current state
