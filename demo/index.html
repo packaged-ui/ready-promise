@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Ready Promise</title>
-  <script type="module" src="../src/index.js"></script>
   <script type="module">
-    import {onReadyState, readyStates} from "../src";
+    import {onReadyState, readyStates} from '../src/index.mjs';
 
     function _output(string)
     {
@@ -25,14 +24,14 @@
      */
 
     // run in reverse order to assert expected output
-    onReadyState(readyStates.complete).then(() => _output('complete'));
-    onReadyState(readyStates.loaded).then(() => _output('loaded'));
-    onReadyState().then(() => _output('loaded (default)'));
+    onReadyState(readyStates.complete).subscribe(() => _output('complete'));
+    onReadyState(readyStates.loaded).subscribe(() => _output('loaded'));
+    onReadyState().subscribe(() => _output('loaded (default)'));
 
     // will execute immediately because state has already passed
-    onReadyState(readyStates.interactive).then(() => _output('interactive'));
-    onReadyState(readyStates.loading).then(() => _output('loading'));
-    onReadyState(readyStates.uninitialized).then(() => _output('uninitialized'));
+    onReadyState(readyStates.interactive).subscribe(() => _output('interactive'));
+    onReadyState(readyStates.loading).subscribe(() => _output('loading'));
+    onReadyState(readyStates.uninitialized).subscribe(() => _output('uninitialized'));
   </script>
 </head>
 <body>

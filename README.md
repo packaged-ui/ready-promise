@@ -1,6 +1,6 @@
 # ready-promise
 
-Provides a promise backed mechanism to hook into document ReadyState changes.
+Provides an observable mechanism to hook into document ReadyState changes.
 
 DOMContentLoaded is also seamlessly blended in as `readyStates.loaded`.
 
@@ -13,7 +13,11 @@ npm i @packaged-ui/ready-promise
 ## Usage
 
 The function `onReadyState` takes one argument of the ReadyState you want to wait for. This argument defaults
-to `loaded`. It returns a promise that will resolve as soon as the document ReadyState reaches the specified value.
+to `loaded`. It returns an observable object that will complete as soon as the document ReadyState reaches the specified
+value.
+
+Each observable state exposes `subscribe` and `unsubscribe` methods which accept a callback that will be called on
+completion.
 
 ## Example
 
@@ -21,9 +25,11 @@ to `loaded`. It returns a promise that will resolve as soon as the document Read
 import {onReadyState, readyStates} from "@packaged-ui/ready-promise";
 
 onReadyState(readyStates.complete)
-  .then(() =>
-        {
-          // do something ...
-        }
-  );
+  .subscribe(
+    () =>
+    {
+      // do something ...
+    }
+  )
+  .unsubscribe(fn);
 ```
